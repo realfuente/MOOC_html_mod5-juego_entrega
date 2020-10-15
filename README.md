@@ -23,7 +23,7 @@ En esta entrega vamos a desarrollar un juego completo usando HTML, CSS y JavaScr
 
 ## Descargar el código del proyecto
 
-El proyecto debe clonarse en el ordenador desde el que se está trabajando:
+El proyecto debe descargarse o clonarse en el ordenador desde el que se está trabajando. Para ello podemos descargar el paquete zip con el código desde el desplegable verde que está en la parte superior de la página de GitHub y que indica "Code" y ahí seleccionar la opción "Download ZIP". Alternativamente se puede usar GIT si se conoce para clonar el proyecto, el comando sería el siguiente: 
 
 ```
 $ git clone https://github.com/ging-moocs/MOOC_html_mod5-juego_entrega
