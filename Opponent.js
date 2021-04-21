@@ -62,13 +62,14 @@ class Opponent extends Character {
     /**
      * Mata al oponente
      */
-    collide() {
-        
+    collide() {        
         if (!this.dead) {
             setTimeout(() => {
                 this.game.removeOpponent();
             }, 2000);
             super.collide();
+            this.game.score++;
+            this.game.mostrar_datos(this.game.score,"Actualizar puntuacion");
         }
 
     }

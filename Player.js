@@ -7,37 +7,38 @@ class Player extends Character {
      * Inicializa un jugador
      * @param game {Game} La instancia del juego al que pertenece el jugador
      */
-    constructor (game) {
+    constructor(game) {
         const height = PLAYER_HEIGHT * game.width / 100,
             width = PLAYER_WIDTH * game.width / 100,
             x = game.width / 2 - width / 2,
             y = game.height - height,
             speed = PLAYER_SPEED,
             myImage = PLAYER_PICTURE,
-            myImageDead = PLAYER_PICTURE_DEAD;
+            myImageDead = PLAYER_PICTURE_DEAD,
+            lives = LIVES; // vidas iniciales 
 
-        super(game, width, height, x, y, speed, myImage, myImageDead);
+        super(game, width, height, x, y, speed, myImage, myImageDead, lives);
     }
 
     /**
      * Actualiza los atributos de posición del jugador y los disparos en función de las teclas pulsadas
      */
-    update () {
+    update() {
         if (!this.dead) {
             switch (this.game.keyPressed) {
-            case KEY_LEFT:
-                if (this.x > this.speed) {
-                    this.x -= this.speed;
-                }
-                break;
-            case KEY_RIGHT:
-                if (this.x < this.game.width - this.width - this.speed) {
-                    this.x += this.speed;
-                }
-                break;
-            case KEY_SHOOT:
-                this.game.shoot(this);
-                break;
+                case KEY_LEFT:
+                    if (this.x > this.speed) {
+                        this.x -= this.speed;
+                    }
+                    break;
+                case KEY_RIGHT:
+                    if (this.x < this.game.width - this.width - this.speed) {
+                        this.x += this.speed;
+                    }
+                    break;
+                case KEY_SHOOT:
+                    this.game.shoot(this);
+                    break;
             }
         }
     }
@@ -46,11 +47,27 @@ class Player extends Character {
      * Mata al jugador
      */
     collide() {
-        if (!this.dead) {
+        //restamos una vida
+        this.lives--;
+
+        if (this.lives > 0) {
+            setTimeout(() => {
+                this.image.src = this.myImage;
+                this.dead = false;
+                this.game.pauseOrResume();
+            }, 2000);
+            super.collide();
+            this.game.pauseOrResume();
+        }
+        else {
+            this.lives = 0;
             setTimeout(() => {
                 this.game.endGame();
             }, 2000);
             super.collide();
         }
+
+        this.game.mostrar_datos("Actualizar vidas", this.lives);
+
     }
 }
